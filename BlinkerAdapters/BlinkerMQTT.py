@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 from Blinker.BlinkerConfig import *
 from Blinker.BlinkerDebug import *
 from BlinkerUtility import *
+import demjson
 
 class MQTTProtocol(object):
     host = ''
@@ -263,9 +264,7 @@ class MQTTClient():
         BLINKER_LOG_ALL('Subscribe topic: ', msg.topic)
         BLINKER_LOG_ALL('payload: ', msg.payload)
         data = msg.payload
-        data = data.decode('utf-8')
-        # BLINKER_LOG('data: ', data)
-        data = json.loads(data)
+        data = demjson.decode(data)
         fromDevice = data['fromDevice']
         data = data['data']
         data = json.dumps(data)
